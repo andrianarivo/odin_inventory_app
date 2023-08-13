@@ -1,9 +1,10 @@
 <a name="readme-top"></a>
 
 <div align="center">
+  <img src="diagram.drawio.svg" />
   <br/>
 
-  <h3><b>Meta Boarder</b></h3>
+<h3><b>Meta Boarder</b></h3>
 
 </div>
 
@@ -12,16 +13,16 @@
 # 📗 Table of Contents
 
 - [📖 About the Project](#about-project)
-  - [🛠 Built With](#built-with)
-    - [Tech Stack](#tech-stack)
-    - [Key Features](#key-features)
-  - [🚀 Live Demo](#live-demo)
+    - [🛠 Built With](#built-with)
+        - [Tech Stack](#tech-stack)
+        - [Key Features](#key-features)
+    - [🚀 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
-  - [Setup](#setup)
-  - [Prerequisites](#prerequisites)
-  - [Install](#install)
-  - [Usage](#usage)
-  - [Deployment](#deployment)
+    - [Setup](#setup)
+    - [Prerequisites](#prerequisites)
+    - [Install](#install)
+    - [Usage](#usage)
+    - [Deployment](#deployment)
 - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
@@ -33,7 +34,7 @@
 
 # 📖 Meta Boarder <a name="about-project"></a>
 
-**Meta Boarder** is an Inventory management app for an imaginary store selling board games. 
+**Meta Boarder** is an Inventory management app for an imaginary store selling board games.
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -151,7 +152,7 @@ Feel free to check the [issues page](../../issues/).
 
 ## ⭐️ Show your support <a name="support"></a>
 
-If you like this project ⭐️ 
+If you like this project ⭐️
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
