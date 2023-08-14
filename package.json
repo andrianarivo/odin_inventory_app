@@ -7,6 +7,10 @@
     "watch": "nodemon ./bin/www",
     "lint": "eslint . --fix"
   },
+  "engines": {
+    "node": "18.17.0",
+    "npm": "9.6.7"
+  },
   "dependencies": {
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
