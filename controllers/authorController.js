@@ -50,12 +50,41 @@ exports.author_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.author_delete_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.author_delete_get = asyncHandler(async (req, res) => {
+  const [author, gamesByAuthor] = await Promise.all([
+    Author.findById(req.params.id).exec(),
+    Game.find({ author: req.params.id }).exec(),
+  ]);
+  if (!author) {
+    res.redirect('/catalog/authors');
+  }
+
+  res.render('author_delete', {
+    title: 'Delete Author',
+    author,
+    game_list: gamesByAuthor,
+  });
 });
 
-exports.author_delete_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.author_delete_post = asyncHandler(async (req, res) => {
+  const [author, gamesByAuthor] = await Promise.all([
+    Author.findById(req.params.id).exec(),
+    Game.find({ author: req.params.id }).exec(),
+  ]);
+
+  if (author) {
+    if (gamesByAuthor.length) {
+      res.render('author_delete', {
+        title: 'Delete Author',
+        author,
+        game_list: gamesByAuthor,
+      });
+    } else {
+      await Author.findByIdAndRemove(req.body.author_id);
+    }
+  }
+
+  res.redirect('/catalog/authors');
 });
 
 exports.author_detail = asyncHandler(async (req, res, next) => {

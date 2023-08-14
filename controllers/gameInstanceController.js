@@ -57,12 +57,27 @@ exports.game_instance_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.game_instance_delete_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_instance_delete_get = asyncHandler(async (req, res) => {
+  const gameInstance = await GameInstance.findById(req.params.id).exec();
+
+  if (!gameInstance) {
+    res.redirect('/catalog/game_instances');
+  } else {
+    res.render('game_instance_delete', {
+      title: 'Delete Game Instance',
+      game_instance: gameInstance,
+    });
+  }
 });
 
-exports.game_instance_delete_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_instance_delete_post = asyncHandler(async (req, res) => {
+  const gameInstance = await GameInstance.findById(req.params.id).exec();
+
+  if (gameInstance) {
+    await GameInstance.findByIdAndRemove(req.body.game_instance_id).exec();
+  }
+
+  res.redirect('/catalog/game_instances');
 });
 
 exports.game_instance_detail = asyncHandler(async (req, res, next) => {

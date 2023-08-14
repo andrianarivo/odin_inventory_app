@@ -46,12 +46,41 @@ exports.category_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.category_delete_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.category_delete_get = asyncHandler(async (req, res) => {
+  const [category, gamesByCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Game.find({ category: req.params.id }).exec(),
+  ]);
+
+  if (!category) {
+    res.redirect('/catalog/categories');
+  }
+
+  res.render('category_delete', {
+    title: 'Delete Category',
+    category,
+    game_list: gamesByCategory,
+  });
 });
 
-exports.category_delete_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.category_delete_post = asyncHandler(async (req, res) => {
+  const [category, gamesByCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Game.find({ category: req.params.id }).exec(),
+  ]);
+
+  if (category) {
+    if (gamesByCategory.length) {
+      res.render('category_delete', {
+        title: 'Delete Category',
+        category,
+        game_list: gamesByCategory,
+      });
+    } else {
+      await Category.findByIdAndRemove(req.body.category_id);
+    }
+  }
+  res.redirect('/catalog/categories');
 });
 
 exports.category_detail = asyncHandler(async (req, res, next) => {

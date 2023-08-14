@@ -102,12 +102,40 @@ exports.game_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.game_delete_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_delete_get = asyncHandler(async (req, res) => {
+  const [game, gameInstances] = await Promise.all([
+    Game.findById(req.params.id).exec(),
+    GameInstance.find({ game: req.params.id }).populate('game').exec(),
+  ]);
+  if (game == null) {
+    res.redirect('/catalog/games');
+  } else {
+    res.render('game_delete', {
+      title: 'Delete Game',
+      game,
+      game_instances: gameInstances,
+    });
+  }
 });
 
-exports.game_delete_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_delete_post = asyncHandler(async (req, res) => {
+  const [game, gameInstances] = await Promise.all([
+    Game.findById(req.params.id).exec(),
+    GameInstance.find({ game: req.params.id }).populate('game').exec(),
+  ]);
+  if (game) {
+    if (gameInstances.length) {
+      res.render('game_delete', {
+        title: 'Delete Game',
+        game,
+        game_instances: gameInstances,
+      });
+    } else {
+      await Game.findByIdAndRemove(req.body.game_id);
+    }
+  }
+
+  res.redirect('/catalog/games');
 });
 
 exports.game_detail = asyncHandler(async (req, res, next) => {

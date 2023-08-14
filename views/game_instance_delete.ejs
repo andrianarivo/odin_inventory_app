@@ -1,0 +1,23 @@
+<div class="content-wrapper pb-0">
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="card mb-5">
+                <div class="card-body">
+                    <h4 class="card-title"><%= locals.title %></h4>
+                    <p class="card-description">Are you sure to delete this Game Instance ?</p>
+                    <div>
+                        <form method="POST" action="">
+                            <div class="form-group">
+                                <input id="game_instance_id" class="form-control" type="hidden" name="game_instance_id"
+                                       required value="<%= locals.game_instance._id %>"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-icon-text">
+                                <i class="mdi mdi-alert btn-icon-prepend"></i> Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
