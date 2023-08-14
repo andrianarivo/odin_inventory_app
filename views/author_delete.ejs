@@ -1,0 +1,41 @@
+<div class="content-wrapper pb-0">
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="card mb-5">
+                <div class="card-body">
+                    <h4 class="card-title"><%= locals.title %></h4>
+
+                    <% if(!locals.game_list.length) { %>
+
+                        <p class="card-description">Are you sure to delete this Author ?</p>
+
+                        <div>
+                            <form method="POST" action="">
+                                <div class="form-group">
+                                    <input id="author_id" class="form-control" type="hidden" name="author_id"
+                                           required value="<%= locals.author._id %>"/>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-icon-text">
+                                    <i class="mdi mdi-alert btn-icon-prepend"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+
+                    <% } else { %>
+                        <p class="card-description">Delete the following game instances before attempting to delete this
+                            game</p>
+                        <ul class="list-group">
+                            <% locals.game_list.forEach((game) => { %>
+                                <li class="list-group-item list-group-item-secondary">
+                                    <a href="<%= game.url %>" class="text-black-50">
+                                        <strong><%= game.name %></strong>
+                                    </a>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

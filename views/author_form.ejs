@@ -1,0 +1,59 @@
+<div class="content-wrapper pb-0">
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="card mb-5">
+                <div class="card-body">
+                    <h4 class="card-title"><%= locals.title %></h4>
+                    <% if(locals.errors) { %>
+                        <div class="card-description">
+                            <p>Please, fix the following errors before we continue:</p>
+                            <ul class="list-group">
+                                <% locals.errors.forEach((error) => { %>
+                                    <li class="list-group-item list-group-item-warning"><%= error.msg %></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    <% } else { %>
+                        <p class="card-description">Fill out the form now!</p>
+                    <% } %>
+                    <form class="forms-sample" method="post" action="">
+                        <div class="form-group row">
+                            <label for="first_name" class="col-sm-3 col-form-label">Firstname:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="first_name" name="first_name"
+                                       placeholder="David"
+                                       value="<%= locals.author ? locals.author.first_name : '' %>"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="last_name" class="col-sm-3 col-form-label">Lastname:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="last_name" name="last_name"
+                                       placeholder="Andrianarivo"
+                                       value="<%= locals.author ? locals.author.last_name : '' %>"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="date_of_birth" class="col-sm-3 col-form-label">Birth date:</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
+                                       placeholder="Temple run"
+                                       value="<%= locals.author ? locals.author.date_of_birth_yyyy_mm_dd : '' %>"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="date_of_death" class="col-sm-3 col-form-label">Date of death:</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="date_of_death" name="date_of_death"
+                                       placeholder="Temple run"
+                                       value="<%= locals.author ? locals.author.date_of_death_yyyy_mm_dd : '' %>"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2"> Submit</button>
+                        <button class="btn btn-light" type="reset">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

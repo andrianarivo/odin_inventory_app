@@ -1,0 +1,38 @@
+<div class="content-wrapper pb-0">
+    <div class="card card-invoice">
+        <div class="card-body">
+            <h4 class="card-title pb-3"><%= locals.title %></h4>
+            <div class="border-bottom mb-3">
+                <p><strong>Lifespan: </strong><%= locals.author.lifespan %></p>
+            </div>
+            <% if (locals.game_list.length) { %>
+                <p>Games designed by this Author: </p>
+                <% locals.game_list.forEach((game) => { %>
+                    <div class="list-card align-items-center w-50 ">
+                        <div class="row align-items-center" style="min-height: 2.5rem">
+                            <div class="col-7 col-sm-8">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-8 pr-0 pl-sm-0">
+                                        <a href="<%= game.url %>" class="text-black">
+                                            <h6 class="ml-3 mb-1 mb-sm-0"><%= game.name %></h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5 col-sm-4">
+                                <div class="badge badge-inverse-info"><%= game.publish_year %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <% })
+            } else { %>
+                <p>We don't have games designed by this Author.</p>
+            <% } %>
+            <div class="border-top mt-3 pt-3">
+                <a href="<%= locals.author.url + "/delete" %>" class="btn btn-danger">Delete</a>
+                <a href="<%= locals.author.url + "/update" %>" class="btn btn-warning">Update</a>
+            </div>
+        </div>
+    </div>
+</div>
