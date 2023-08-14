@@ -32,6 +32,10 @@
             } else { %>
                 <p>We don't have games of this category.</p>
             <% } %>
+            <div class="border-top mt-3 pt-3">
+                <a href="<%= locals.category.url + "/delete" %>" class="btn btn-danger">Delete</a>
+                <a href="<%= locals.category.url + "/update" %>" class="btn btn-warning">Update</a>
+            </div>
         </div>
     </div>
 </div>

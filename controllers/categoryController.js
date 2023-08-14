@@ -1,15 +1,42 @@
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
 
 const Category = require('../models/category');
 const Game = require('../models/game');
 
 exports.category_create_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+  res.render('category_form.ejs', {
+    title: 'Create Category',
+  });
 });
 
-exports.category_create_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
-});
+exports.category_create_post = [
+  body('name', 'Name must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must not be empty').trim().isLength({ min: 1 }).escape(),
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('category_form', {
+        title: 'Create Category',
+        category,
+        errors: errors.array(),
+      });
+    } else {
+      const categoryExists = await Category.findOne({ name: req.body.name }).exec();
+      if (categoryExists) {
+        res.redirect(categoryExists.url);
+      }
+      await category.save();
+      res.redirect(category.url);
+    }
+  }),
+];
 
 exports.category_update_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
@@ -19,12 +46,41 @@ exports.category_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.category_delete_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.category_delete_get = asyncHandler(async (req, res) => {
+  const [category, gamesByCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Game.find({ category: req.params.id }).exec(),
+  ]);
+
+  if (!category) {
+    res.redirect('/catalog/categories');
+  }
+
+  res.render('category_delete', {
+    title: 'Delete Category',
+    category,
+    game_list: gamesByCategory,
+  });
 });
 
-exports.category_delete_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.category_delete_post = asyncHandler(async (req, res) => {
+  const [category, gamesByCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Game.find({ category: req.params.id }).exec(),
+  ]);
+
+  if (category) {
+    if (gamesByCategory.length) {
+      res.render('category_delete', {
+        title: 'Delete Category',
+        category,
+        game_list: gamesByCategory,
+      });
+    } else {
+      await Category.findByIdAndRemove(req.body.category_id);
+    }
+  }
+  res.redirect('/catalog/categories');
 });
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
