@@ -6,8 +6,12 @@ const logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const debug = require('debug')('app');
+const compression = require('compression');
+const helmet = require('helmet');
+const RateLimit = require('express-rate-limit');
 
-const mongoDB = 'mongodb+srv://andrianarivodavid:M0lASDvMMNaryTUa@cluster0.tb7c5wk.mongodb.net/?retryWrites=true&w=majority';
+const devDbUrl = 'mongodb+srv://andrianarivodavid:M0lASDvMMNaryTUa@cluster0.tb7c5wk.mongodb.net/?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_URI || devDbUrl;
 
 async function main() {
   await mongoose.connect(mongoDB);
@@ -21,7 +25,21 @@ const catalogRouter = require('./routes/catalog');
 
 const app = express();
 
-app.enable('trust proxy');
+app.use(compression());
+
+const limiter = RateLimit({
+  windowMs: 60000, // 1 minute
+  max: 500,
+});
+app.use(limiter);
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      'script-src': ['\'self\''],
+    },
+  }),
+);
 
 // view engine setup
 app.use(expressLayouts);
