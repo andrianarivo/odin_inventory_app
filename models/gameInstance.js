@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const GameInstanceSchema = new Schema({
-  game: { type: Schema.Types.ObjectId, required: true },
+  game: { type: Schema.Types.ObjectId, required: true, ref: 'Game' },
   publisher: { type: String, required: true },
   status: { type: String, enum: ['InStock', 'Maintenance', 'Reserved'] },
   number_in_stock: { type: Number, required: true },

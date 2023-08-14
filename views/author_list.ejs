@@ -1,0 +1,39 @@
+<div class="content-wrapper pb-0">
+    <div class="card">
+        <div class="card-body px-0 overflow-auto">
+            <h4 class="card-title pl-4"><%= locals.title %></h4>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-light">
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Date of birth</th>
+                        <th>Date of death (optional)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% locals.author_list.forEach((author, index) => { %>
+                        <tr>
+                            <td>
+                                <a href="<%= author.url %>" class="nav-link text-black">
+                                    <p class="mb-0 font-weight-medium"><%= author.first_name %></p>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="<%= author.url %>" class="nav-link text-black">
+                                    <p class="mb-0 font-weight-medium"><%= author.last_name %></p>
+                                </a>
+                            </td>
+                            <td>
+                                <%= author.date_of_birth_formatted %>
+                            </td>
+                            <td><%= author.date_of_death_formatted %></td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 
+const Author = require('../models/author');
 exports.index = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
@@ -32,6 +33,11 @@ exports.author_detail = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.author_list = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.author_list = asyncHandler(async (req, res) => {
+  const allAuthors = await Author.find({}).exec();
+
+  res.render('author_list', {
+    title: 'Author List',
+    author_list: allAuthors,
+  });
 });

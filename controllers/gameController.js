@@ -55,6 +55,10 @@ exports.game_detail = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.game_list = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_list = asyncHandler(async (req, res) => {
+  const allGames = await Game.find({}, 'name description').exec();
+  res.render('game_list', {
+    title: 'Game List',
+    game_list: allGames,
+  });
 });
