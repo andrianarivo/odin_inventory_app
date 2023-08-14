@@ -62,7 +62,7 @@ async function gameCreate(index, name, description, pub_date, author, category) 
     description,
     author,
   };
-  if (category != false) gameDetail.genre = category;
+  if (category != false) gameDetail.category = category;
   if (pub_date != false) gameDetail.publish_year = pub_date;
 
   const game = new Game(gameDetail);
@@ -225,7 +225,7 @@ async function createGameInstances() {
         5,
         63.03
     ),
-    gameInstanceCreate(9, games[3], 'Twin Sales Interactive', false, 1, 6.99),
-    gameInstanceCreate(10, games[4], 'Rio Grande Games', false, 0, 19.95),
+    gameInstanceCreate(9, games[3], 'Twin Sales Interactive', 'Reserved', 1, 6.99),
+    gameInstanceCreate(10, games[4], 'Rio Grande Games', 'Reserved', 0, 19.95),
   ]);
 }
