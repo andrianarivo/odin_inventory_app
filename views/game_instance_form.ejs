@@ -1,0 +1,82 @@
+<div class="content-wrapper pb-0">
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="card mb-5">
+                <div class="card-body">
+                    <h4 class="card-title"><%= locals.title %></h4>
+                    <% if(locals.errors) { %>
+                        <div class="card-description">
+                            <p>Please, fix the following errors before we continue:</p>
+                            <ul class="list-group">
+                                <% locals.errors.forEach((error) => { %>
+                                    <li class="list-group-item list-group-item-warning"><%= error.msg %></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    <% } else { %>
+                        <p class="card-description">Fill out the form to create a new board game!</p>
+                    <% } %>
+                    <form class="forms-sample" method="post" action="">
+                        <div class="form-group row">
+                            <label for="game" class="col-sm-3 col-form-label">Game:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="game" name="game">
+                                    <% locals.game_list.forEach((game) => { %>
+                                        <option value="<%= game._id %>"
+                                                <%= (locals.selected_game && locals.selected_game.toString() === game._id.toString()) ?
+                                                        'selected' :
+                                                        '' %>>
+                                            <%= game.name %>
+                                        </option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="status" class="col-sm-3 col-form-label">Status:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="status" name="status">
+                                    <option value="Maintenance" <%= (locals.game_instance && locals.game_instance.status === "Maintenance") ? "selected" : "" %>>
+                                        Maintenance
+                                    </option>
+                                    <option value="Reserved" <%= (locals.game_instance && locals.game_instance.status === "Reserved") ? "selected" : "" %>>
+                                        Reserved
+                                    </option>
+                                    <option value="InStock" <%= (locals.game_instance && locals.game_instance.status === "InStock") ? "selected" : "" %>>
+                                        InStock
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="publisher" class="col-sm-3 col-form-label">Publisher:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="publisher" name="publisher"
+                                       placeholder="LEGO"
+                                       value="<%= locals.game_instance ? locals.game_instance.publisher : '' %>"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="number_in_stock" class="col-sm-3 col-form-label">Number in stock:</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="number_in_stock" name="number_in_stock"
+                                       placeholder="2"
+                                       value="<%= locals.game_instance ? locals.game_instance.number_in_stock : '' %>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-3 col-form-label">Number in stock:</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="price" name="price"
+                                       placeholder="27.19" step=".01"
+                                       value="<%= locals.game_instance ? locals.game_instance.price : '' %>">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2"> Submit</button>
+                        <button class="btn btn-light" type="reset">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

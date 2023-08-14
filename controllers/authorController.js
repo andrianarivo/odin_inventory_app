@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
 
 const Author = require('../models/author');
 const Game = require('../models/game');
@@ -8,12 +9,38 @@ exports.index = asyncHandler((req, res) => {
 });
 
 exports.author_create_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+  res.render('author_form', {
+    title: 'Create Author',
+  });
 });
 
-exports.author_create_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
-});
+exports.author_create_post = [
+  body('first_name', 'Firstname must be specified').trim().isLength({ min: 1 }).escape(),
+  body('last_name', 'Lastname must be specified').trim().isLength({ min: 1 }).escape(),
+  body('date_of_birth').optional({ values: 'falsy' }).isISO8601().escape(),
+  body('date_of_death').optional({ values: 'falsy' }).isISO8601().escape(),
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const author = new Author({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      date_of_birth: req.body.date_of_birth,
+      date_of_death: req.body.date_of_death,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('author_form', {
+        title: 'Create Author',
+        author,
+        errors: errors.array(),
+      });
+    } else {
+      await author.save();
+      res.redirect(author.url);
+    }
+  }),
+];
 
 exports.author_update_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
