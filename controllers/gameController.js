@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
 
 const Game = require('../models/game');
 const Author = require('../models/author');
@@ -27,13 +28,71 @@ exports.index = asyncHandler(async (req, res) => {
   });
 });
 
-exports.game_create_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_create_get = asyncHandler(async (req, res) => {
+  const [allAuthor, allCategories] = await Promise.all([
+    Author.find().exec(),
+    Category.find().exec(),
+  ]);
+
+  res.render('game_form', {
+    title: 'Create Game',
+    authors: allAuthor,
+    categories: allCategories,
+  });
 });
 
-exports.game_create_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
-});
+exports.game_create_post = [
+  (req, res, next) => {
+    if (!(req.body.category instanceof Array)) {
+      if (typeof req.body.category === 'undefined') req.body.category = [];
+
+      else req.body.category = new Array(req.body.category);
+    }
+    next();
+  },
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('author', 'Author must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('publish_year', 'Publish year must be a number.').trim().isNumeric().escape(),
+  body('category.*').escape(),
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const game = new Game({
+      name: req.body.name,
+      author: req.body.author,
+      description: req.body.description,
+      publish_year: req.body.publish_year,
+      category: req.body.category,
+    });
+
+    if (!errors.isEmpty()) {
+      const [allAuthors, allCategories] = await Promise.all([
+        Author.find().exec(),
+        Category.find().exec(),
+      ]);
+      const allCategoriesChecked = allCategories.map((category) => {
+        const newCategory = category;
+        // eslint-disable-next-line no-underscore-dangle
+        if (req.body.category.includes(category._id.toString())) {
+          newCategory.checked = true;
+        }
+        return newCategory;
+      });
+      res.render('game_form', {
+        title: 'Create Game',
+        authors: allAuthors,
+        categories: allCategoriesChecked,
+        selected_author: game.author,
+        game,
+        errors: errors.array(),
+      });
+    } else {
+      await game.save();
+      res.redirect(game.url);
+    }
+  }),
+];
 
 exports.game_update_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
