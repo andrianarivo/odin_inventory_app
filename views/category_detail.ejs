@@ -1,0 +1,37 @@
+<div class="content-wrapper pb-0">
+    <div class="card card-invoice">
+        <div class="card-body">
+            <h4 class="card-title pb-3"><%= locals.title %></h4>
+            <div class="border-bottom mb-3">
+                <p><strong>Description: </strong><%= locals.category.description %></p>
+            </div>
+            <% if (locals.game_list.length) { %>
+                <p>Games that fall under this category: </p>
+                <% locals.game_list.forEach((game) => { %>
+                    <div class="list-card align-items-center w-50 ">
+                        <div class="row align-items-center" style="min-height: 2.5rem">
+                            <div class="col-7 col-sm-8">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-8 pr-0 pl-sm-0">
+                                        <a href="<%= game.url %>" class="text-black">
+                                            <h6 class="ml-3 mb-1 mb-sm-0"><%= game.name %></h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5 col-sm-4">
+                                <div class="d-flex pt-1 align-items-center">
+                                    <a href="<%= game.author.url %>">
+                                        <div class="badge badge-inverse-info"><%= game.author.name %></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <% })
+            } else { %>
+                <p>We don't have games of this category.</p>
+            <% } %>
+        </div>
+    </div>
+</div>
