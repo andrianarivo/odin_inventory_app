@@ -1,35 +1,37 @@
-exports.index = function (req, res) {
-  res.end('Not Yet implemented');
-};
+const asyncHandler = require('express-async-handler');
 
-exports.game_instance_create_get = function (req, res) {
+exports.index = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_instance_create_post = function (req, res) {
+exports.game_instance_create_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_instance_update_get = function (req, res) {
+exports.game_instance_create_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_instance_update_post = function (req, res) {
+exports.game_instance_update_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_instance_delete_get = function (req, res) {
+exports.game_instance_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_instance_delete_post = function (req, res) {
+exports.game_instance_delete_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_instance_detail = function (req, res) {
+exports.game_instance_delete_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_instance_list = function (req, res) {
+exports.game_instance_detail = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
+
+exports.game_instance_list = asyncHandler((req, res) => {
+  res.end('Not Yet implemented');
+});

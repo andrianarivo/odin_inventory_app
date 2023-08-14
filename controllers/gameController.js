@@ -27,34 +27,34 @@ exports.index = asyncHandler(async (req, res) => {
   });
 });
 
-exports.game_create_get = function (req, res) {
+exports.game_create_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_create_post = function (req, res) {
+exports.game_create_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_update_get = function (req, res) {
+exports.game_update_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_update_post = function (req, res) {
+exports.game_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_delete_get = function (req, res) {
+exports.game_delete_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_delete_post = function (req, res) {
+exports.game_delete_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_detail = function (req, res) {
+exports.game_detail = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.game_list = function (req, res) {
+exports.game_list = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});

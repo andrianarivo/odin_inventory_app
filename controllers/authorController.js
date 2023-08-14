@@ -1,35 +1,37 @@
-exports.index = function (req, res) {
-  res.end('Not Yet implemented');
-};
+const asyncHandler = require('express-async-handler');
 
-exports.author_create_get = function (req, res) {
+exports.index = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.author_create_post = function (req, res) {
+exports.author_create_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.author_update_get = function (req, res) {
+exports.author_create_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.author_update_post = function (req, res) {
+exports.author_update_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.author_delete_get = function (req, res) {
+exports.author_update_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.author_delete_post = function (req, res) {
+exports.author_delete_get = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.author_detail = function (req, res) {
+exports.author_delete_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
 
-exports.author_list = function (req, res) {
+exports.author_detail = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
-};
+});
+
+exports.author_list = asyncHandler((req, res) => {
+  res.end('Not Yet implemented');
+});
