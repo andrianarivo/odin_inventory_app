@@ -42,13 +42,49 @@ exports.author_create_post = [
   }),
 ];
 
-exports.author_update_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.author_update_get = asyncHandler(async (req, res, next) => {
+  const author = await Author.findById(req.params.id).exec();
+
+  if (!author) {
+    const err = new Error('Category Not Found');
+    err.status = 404;
+    next(err);
+  } else {
+    res.render('author_form', {
+      title: 'Update Author',
+      author,
+    });
+  }
 });
 
-exports.author_update_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
-});
+exports.author_update_post = [
+  body('first_name', 'Firstname must be specified').trim().isLength({ min: 1 }).escape(),
+  body('last_name', 'Lastname must be specified').trim().isLength({ min: 1 }).escape(),
+  body('date_of_birth').optional({ values: 'falsy' }).isISO8601().escape(),
+  body('date_of_death').optional({ values: 'falsy' }).isISO8601().escape(),
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const author = new Author({
+      _id: req.params.id,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      date_of_birth: req.body.date_of_birth,
+      date_of_death: req.body.date_of_death,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('author_form', {
+        title: 'Create Author',
+        author,
+        errors: errors.array(),
+      });
+    } else {
+      const updatedAuthor = await Author.findByIdAndUpdate(req.params.id, author, {});
+      res.redirect(updatedAuthor.url);
+    }
+  }),
+];
 
 exports.author_delete_get = asyncHandler(async (req, res) => {
   const [author, gamesByAuthor] = await Promise.all([

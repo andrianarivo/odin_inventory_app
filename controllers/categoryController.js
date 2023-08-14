@@ -38,13 +38,45 @@ exports.category_create_post = [
   }),
 ];
 
-exports.category_update_get = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.category_update_get = asyncHandler(async (req, res, next) => {
+  const category = await Category.findById(req.params.id).exec();
+
+  if (!category) {
+    const err = new Error('Category Not Found');
+    err.status = 404;
+    next(err);
+  } else {
+    res.render('category_form', {
+      title: 'Update Category',
+      category,
+    });
+  }
 });
 
-exports.category_update_post = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
-});
+exports.category_update_post = [
+  body('name', 'Name must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must not be empty').trim().isLength({ min: 1 }).escape(),
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const category = new Category({
+      _id: req.params.id,
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('category_form', {
+        title: 'Update Category',
+        category,
+        errors: errors.array(),
+      });
+    } else {
+      const updatedCategory = await Category.findByIdAndUpdate(req.params.id, category, {});
+      res.redirect(updatedCategory.url);
+    }
+  }),
+];
 
 exports.category_delete_get = asyncHandler(async (req, res) => {
   const [category, gamesByCategory] = await Promise.all([
