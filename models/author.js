@@ -15,8 +15,8 @@ AuthorSchema.virtual('url').get(function handler() {
 
 AuthorSchema.virtual('name').get(function handler() {
   let fullName = '';
-  if (this.first_name && this.family_name) {
-    fullName = `${this.family_name}, ${this.first_name}`;
+  if (this.first_name && this.last_name) {
+    fullName = `${this.last_name}, ${this.first_name}`;
   }
   return fullName;
 });

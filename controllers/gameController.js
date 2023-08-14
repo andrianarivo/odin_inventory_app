@@ -51,10 +51,29 @@ exports.game_delete_post = asyncHandler((req, res) => {
   res.end('Not Yet implemented');
 });
 
-exports.game_detail = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_detail = asyncHandler(async (req, res, next) => {
+  const [game, allGameInstances] = await Promise.all([
+    Game.findById(req.params.id).populate('author').populate('category').exec(),
+    GameInstance.find({ game: req.params.id }).exec(),
+  ]);
+
+  if (game == null) {
+    const err = new Error('Game not found');
+    err.status = 404;
+    next(err);
+  } else {
+    res.render('game_detail', {
+      title: game.name,
+      game,
+      game_instances: allGameInstances,
+    });
+  }
 });
 
-exports.game_list = asyncHandler((req, res) => {
-  res.end('Not Yet implemented');
+exports.game_list = asyncHandler(async (req, res) => {
+  const allGames = await Game.find({}, 'name description').exec();
+  res.render('game_list', {
+    title: 'Game List',
+    game_list: allGames,
+  });
 });

@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= locals.title %></title>
+    <base href="/">
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css"/>
     <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css"/>
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css"/>
@@ -18,25 +19,15 @@
 <div class="container-scroller">
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-            <a class="sidebar-brand brand-logo" href="/catalog"><img src="assets/images/logo.svg" alt="logo"/></a>
-            <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="/catalog"><img src="assets/images/logo-mini.svg"
-                                                                                    alt="logo"/></a>
+            <a class="sidebar-brand brand-logo" href="/catalog">
+                <img src="assets/images/logo.svg" alt="logo"/>
+            </a>
+            <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="/catalog">
+                <img src="assets/images/logo-mini.svg" alt="logo"/>
+            </a>
         </div>
         <ul class="nav">
-            <li class="nav-item nav-profile">
-                <a href="#" class="nav-link">
-                    <div class="nav-profile-image">
-                        <img src="assets/images/faces/face5.jpg" alt="profile"/>
-                        <span class="login-status online"></span>
-                        <!--change to offline or busy as needed-->
-                    </div>
-                    <div class="nav-profile-text d-flex flex-column pr-3">
-                        <span class="font-weight-medium mb-2">David Andrianarivo</span>
-                        <span class="font-weight-normal">Software Engineer</span>
-                    </div>
-                </a>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item mt-5">
                 <a class="nav-link" href="/catalog">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Home</span>

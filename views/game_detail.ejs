@@ -1,0 +1,70 @@
+<div class="content-wrapper pb-0">
+    <div class="card card-invoice">
+        <div class="card-body">
+            <h4 class="card-title pb-3"><%= locals.title %></h4>
+            <div class="border-bottom mb-3">
+                <p><strong>Description: </strong><%= locals.game.description %></p>
+            </div>
+            <div class="border-bottom mb-3">
+                <p><strong>Author: </strong><%= locals.game.author.name %></p>
+            </div>
+            <div class="border-bottom mb-3">
+                <p><strong>Publish year: </strong><%= locals.game.publish_year %></p>
+            </div>
+            <% if (locals.game.category.length) { %>
+                <div class="border-bottom mb-3">
+                    <p><strong>Categories: </strong>
+                        <% locals.game.category.forEach((category) => { %>
+                            <span class="badge badge-inverse-dark"><%= category.name %></span>
+                        <% }) %>
+                    </p>
+                </div>
+            <% } %>
+            <% if (locals.game_instances.length) { %>
+                <p>Copies by Publisher: </p>
+                <% locals.game_instances.forEach((gameInstance) => { %>
+                    <div class="list-card align-items-center w-50 ">
+                        <div class="row align-items-center" style="min-height: 2.5rem">
+                            <div class="col-7 col-sm-8">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-8 pr-0 pl-sm-0">
+                                        <a href="<%= gameInstance.url %>" class="text-black">
+                                            <h6 class="ml-3 mb-1 mb-sm-0"><%= gameInstance.publisher %></h6>
+                                        </a>
+                                    </div>
+                                    <div class="badge badge-inverse-<%= gameInstance.number_in_stock < 3 ? 'danger' : 'info' %>"><%= gameInstance.number_in_stock %>
+                                        <%= gameInstance.number_in_stock < 3 ? 'Left' : 'Copies' %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5 col-sm-4">
+                                <div class="d-flex pt-1 align-items-center">
+                                    <% if (gameInstance.status === 'Maintenance') { %>
+                                        <div class="reload-outer bg-danger" data-toggle="tooltip" data-placement="top"
+                                             title="<%= gameInstance.status %>">
+                                            <i class="mdi mdi-alert"></i>
+                                        </div>
+                                    <% } %>
+                                    <% if (gameInstance.status === 'Reserved') { %>
+                                        <div class="reload-outer bg-warning" data-toggle="tooltip" data-placement="top"
+                                             title="<%= gameInstance.status %>">
+                                            <i class="mdi mdi-bookmark"></i>
+                                        </div>
+                                    <% } %>
+                                    <% if (gameInstance.status === 'InStock') { %>
+                                        <div class="reload-outer bg-success" data-toggle="tooltip" data-placement="top"
+                                             title="<%= gameInstance.status %>">
+                                            <i class="mdi mdi-buffer"></i>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <% })
+            } else { %>
+                <p>No local copies of this game available.</p>
+            <% } %>
+        </div>
+    </div>
+</div>
