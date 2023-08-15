@@ -9,9 +9,10 @@ const debug = require('debug')('app');
 const compression = require('compression');
 const helmet = require('helmet');
 const RateLimit = require('express-rate-limit');
+const nconf = require('nconf');
 
-const devDbUrl = 'mongodb+srv://andrianarivodavid:M0lASDvMMNaryTUa@cluster0.tb7c5wk.mongodb.net/?retryWrites=true&w=majority';
-const mongoDB = process.env.MONGODB_URI || devDbUrl;
+nconf.file({ file: 'config.json' });
+const mongoDB = nconf.get('mongoDB');
 
 async function main() {
   await mongoose.connect(mongoDB);
